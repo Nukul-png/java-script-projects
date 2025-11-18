@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin-bottom: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <h1>Love Calculator</h1>
+        <form action="/action">
+            
+            <label for="Boy">Boy</label>
+            <input type="text" id="Boy" name="Boy" required>
+            <br>
+            <br>
+            <label for="Girl">Girl</label>
+            <input type="text" id="Girl" name="Girl" required>
+            <br><br>
+            <button type="submit">Calculate</button>
+        </form>
+        <h2></h2>
+    </div>
+    <script>
+        const form=document.querySelector('form');
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            //select boy
+            const Boy=document.getElementById("Boy");
+            const Girl=document.getElementById("Girl");
+            const l1=Boy.value.length;
+            const l2=Girl.value.length;
+            const result=Math.pow(l1+l2,3)%101;
+            document.querySelector('h2').textContent=`Result : ${result} %`;
+            form.reset();
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI CALCULATOR</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            background-color: #343c7A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            height: 550px;
+            width: 350px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            padding-top: 40px;
+        }
+        .heading{
+            padding-left: 55px;
+            display: flex;
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.4);
+            
+        }
+        .heading span{
+            margin-right: 30px;
+            margin-top: 7px;
+        }
+        .heading h2{
+            font-size: 35px;
+        }
+
+        .gender{
+            margin-top: 15px;
+        }
+        .gender h4{
+            margin-left: 25px;
+            font-size: 20px;
+        }
+        .mf{
+            height: 40px;
+            margin-top: 15px;
+            margin-left: 35px;
+            margin-right: 35px;
+            border: 1px solid black;
+            border-radius: 35px;
+        }
+        .mf .gmf{
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .m,.f{
+            width: 50%;
+            text-align: center;
+            padding: 8px 0;
+            cursor: pointer;
+            border-radius: 35px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .active{
+            background-color: #ff9800;
+            color: white;
+        }
+        
+
+        .htavt{
+            margin-top: 25px;
+            height: 150px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .height{
+            height:100%;
+            width: 40%;
+        }
+        .avatar-section{
+            height: 100%;
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .height{
+            padding: 25px;
+        }
+        #htcm{
+            margin-top: 7px;
+            width: 80px;
+            height: 30px;
+        }
+        #avatar{
+            height: 80%;
+            width: 80%;
+            object-fit: contain;
+            display: none;
+        }
+        .wt{
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .wt #weigh{
+            height: 80%;
+            margin-left: 20px;
+            width: 40%;
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+        .calculate{
+            height: 40px;
+            font-size: 30px;
+            color: white;
+            width: 250px;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 15px;
+            background-color: red;
+            border-radius: 40px;
+            font-weight: 100;
+        }
+        #bmi{
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            margin-left: 25px;
+            font-size: 30px;
+            font-weight: 800;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <h2>Calculator</h2>
+        </div>
+        <div class="gender">
+            <h4>Gender</h4>
+        </div>
+        <div class="mf">
+            <div class="gmf">
+                <span class="m" id="male">Male</span>
+                <span class="f" id="female">Female</span>
+            </div>
+        </div>
+        <div class="htavt">
+            <div class="height">
+                <h3>Height <p>(in cm)</p></h3>
+                <input type="text" id="htcm">
+            </div>
+            <div class="avatar-section">
+                <img src="" id="avatar" alt="">
+            </div>
+        </div>
+        <div class="wt">
+            <h3>Weight<p>(in kg)</p></h3>
+            <input type="text" id="weigh">
+        </div>
+        <button class="calculate" id="btn">Calculate</button>
+        <p id="bmi"></p>
+    </div>
+    <script>
+        const male=document.getElementById("male");
+        const female=document.getElementById("female");
+        const avatar=document.getElementById("avatar");
+        const btn=document.getElementById("btn");
+        male.addEventListener("click",()=>{
+            male.classList.add("active");
+            female.classList.remove("active");
+            avatar.src="data:image/jpeg;base64,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";
+            avatar.style.display="block";
+        });
+        female.addEventListener("click",()=>{
+            female.classList.add("active");
+            male.classList.remove("active");
+            avatar.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAABZVBMVEX///8Vio39zJgBLD5qLRruqnUtBgAFbnXe4uJKFAZbIRFXHg1SGAjFe09hJBRpKh1To6VQkJUAIzf/0ZwAKDtHW2cpAADSiEYYAAAkAAAuAAAeAAAhAABADwQAAABMEgMAHjRjHgBGAADp4uD08O85DAMfICcAM0MSgYUAZm1bAABnJg7FRjqHUjYzCQLkpHJ8aFoFTlntpGqympbVycadfnaKYVdfEgDf1tM6AABXDgD3v4ybaUrCsKwOAADYlGXJV0SVOilwPScAACEXJzIDPkyDsrTR5OUzTFnJ0dMAEixknKBvNyqAVEmlioVnOC6ueldVKh7CjWXitYd4Tzp8XlvToHY8GRSzbUW6d0AvFQeUXjNDIQ11ZGFNLCSclZRNTUxlU07XspyZdVb927nnzbj/8OBcKgWGYkqxUjuCOCTOa1FHNzOCd3UmGBs2JSQ1NThDbXay0tKvur54g4mOnKMnOEgjivcDAAAN9klEQVR4nO2ai1fa2BbGRQQkhNgSGkHFIMTKo4hWFCQgLVVbrVqEjrYzo9aqvZ25dR7amb//nkde55xQ0pLYddfqXsul4knyy7e/s88+iSMjP+JH/Ij/21CyleYKiGazklW+NwwKpbm6v1esopgr7u0fVL43l9JcmyvMFcfMKILfV78rV3O/ODfGxlxxrfK9kGprhaINEtKrsJb9LkwHY3YqGVh7zbtHyq5VGRBBsP6SObhrptoeIZMQ4cMo+IgOxvGZ1bv1e2WvaCWCODLPEUrx/B1TVcZMJgFpxFl5sFA8H5Ff3V11yO4bTEglnibCQvGRCJ+p/1S7EyZl3/ATRIoQ5tL/gJhg1Lk7MfyBMe94CsmYf4LBBOIurLWi6yTIdOIEzmQyoSKZfa+psvpSx4XDlJcEnjCUhWrVWyZlbU5n4kkk4COLoQgozuNCWpnTLc7RTLpwHM0U4SIFT5dCrUJFmNTJYatOBBbHcbyXtqoUsBgyI5PuecSUgRWet0Bxde/WZwWXTY6yk2CUhgkkEtc5XA8DKI7TmbjInmdQ2FE0E5iH1lrAy12x116XgVKcwGlQXN2zvg9PPapg8kbqOKxTd3RUHH29DvMnCJwW9TWPXKXg5FFuChOlQBZa6igIFVFxBlWk6NEEbMIFRqCRCJkybcwEtGpnUAJ1qoxHVl+lenKAJOtuwpVALgUCozjEHpiBFqj6midMWdJLETms95k6EtcxmADVESnVniemqlQJkcyajjPHy+2WhQlQNTJWqaqezD+9ZxE4MOGMXhMoht00BmQKqKPWOJRRWdCgPDEVqpyAKGJpfjWReJlvlBkmsWOVqurFqgwtJVg3BwInY5H4jFwCmaOZQF3YM6US5ryoVBXrrmqC42UNSZbHkEqEn2ipwN0UvViUmxgKXCICgTBTZp0vdTASoxMsCzKqoByi8mL6rdaROmFZi0wmw7VLXY3IRidI9TpjQnlQ05WfMrIRmXUA1Oi0AkZQMomiiL51ca2CTMKcB1D7MpxkPNx8thvdVjlQbrVaZTsmwNPrHvXgj71D1MJAJqHu/hZQ2dMWvuNFqRVQVbUj1OsRnD+V0Eg9arSrhUKxA+lA/pDXIZT71TOr72KCUhKKUCq1jsDVQY1o9KwyHTXG5ortxlGv1yn1RsWLjKxDFdyHqmn1/FCSpoAEnS5Imij2uu1qvdoQDZ0ahXq13YWeAn9sqGJ3XUbPPryB0le+lCQdAz2QmYCryiBZjSMTqtvo9tTH8HPwiwp60PWwl1B4zyC82kgCKMQUjb55E42q2kwzpp06Ofn27dtJWCMAGagh67JXUKjDGwONQHf6WFQBUita+jkxnSxFqWqgTv6S2NiY/fVtC/0aXm93LzCU+ysybjs7jx8HGosI6k3q5Kf6ceT0lzIJFfglechHDs42SgGgoHh4qII0ZryBWkFQk5OTj8ttIEe5sXE70ryeTexXoiIB9XZpX3m3saeMP4z0YE0/EsEdwKW84H6bgKDaAGoy0IVV8fXJiLJ6PrtRHH9PZu99Ze7k4SyolJULCHUxCmUFpUOouv+cYxWuxyUI9Rgtc+JRbWSt/jPYkCtk+hRlr34MH/9cIgV7o3BOlKCp9l2HQi0egprU1t5erbJXmABTioQC9tur7tdGLnXpAppSwpjb60wNFYS2FWpUvbx6X/tweUlCjV5++HB1ZX6I1kY0/aorLkOh7CGjg/yZRUAcHRRIqHIGtQku954VvPJxUUTFtnP9AwnVweXT3Wcv+gM8jjCVc6gSj6CKrkp1oPXncvgthCoPzhqRvdYhhnLVVU3joWIKShWddC4UgmpkwnhNFgTX1r+K+UA4PB2dzI5cOYf6MPIhEIDvbjSoPZfKgpUpPPWf98BidBXoH8BEvVIGHomhiu5QNbWHrwJ6eZbagCuYUyixB6BW1/FrN0w1t+8CVVN/mi/jV3qLyYpyduHQ6eLh6tX7jHak7JpW+lsPQTszSODMaeJXp0IlkuGpKf1ITDVRHVarZkHbp/P6mcOLoElPHDmT6uN0UJKC8wTVxMTccBv42hjDNB8EMf2RvjzcBLaodm+0dyrB0VLYQjUBYrgmxnwTY0QQXea4R0ultlr06iNeJNBoU6owP4FibohyldUfk4VJoYLBxEcaSiT2DziCEh4dNI/nEFRxiNZqpapXclIoINUMIxUbnWlttEWqMJaq8O1e15c8RijoKhIKykRJpZ7qQgUXzTMgU00M8axRqwcCIxSQatoyAUXgqGhAjQJXWT58nTBGB2moIXY2eK9nCxVMvrLMsu5vjx49eQK+tIctkOkoKZmjUzTUtztdN7pxxpR5GeB1I09Pnz79/Xf89aani3eatAw2TYWYhGFeamlv+22hpBkjgeVHIJ78BqXSy4J4sRG0g4pgSw3TV1UoU1mhgtKUTiW2njxC8V9V/6Q7HbSFQtkThivpq1WiJhBQweSpURfU6BNgqpZh8t6iZAvFD+soFFpN15cZ4krBabOwi6JqlgSxdzpDjkxZmYrDNsXZfYJqkaI6ta+hr8nkGSUBJa8w/PZde2+sLX8pimqjZLfd+jhLMWGhUoip6MYjBf2fyrgUUdI1qUpRldGq1aaShwv6PFr3CgfubLNWcEOcgm6VF2moKLXhAsWdhsKZhyWqOObafrTyComF5lCKgYoSbZQKPqCgkMSLKdiyuNGg66FcpwT4DHaRpkpAqGhLX/LE0XKUgdLSDgzFu/vYTPkkhcc43NlaE4iUAlRl9KxDRUgUFDLUvMRPHErXrjKNZEFnfszh2yYWQAwFuUDoP1srAmICGk9wwekzd6GuwWWklGZai1SJRiDKRGApbY7APpTCE/OS9KdLm/YafPWknElw1ZA0h1jKQvoi0KKZWoGl2B9TVkctBqUIlDm5eIZON+zrrNr5+fXJpxm8K9Hu3Mzf5u5FgKZqBQJLu36DCk8NiYug25r+E5zuZOh3bMr5bAJ1RlLyVPOIAbUZf9YJUFTwHeDSs7hBhQuuxK8dS+CTKSkxe+5G9Wx+Sk5PJ5I/HxzMkFCb/vRuFz09NJnQ+5GLZzF/PGlAAQ9K65WzP5MzM8k/zl3ylVI5u75eqWXRRmDR8NSmP777UHsL2TJlAtF9lo77/cEpLd1wYiTPR7LNs7Omy+9nsuczlotAJn9s99x4hQxLgv5zeXM35vdv6k5HN5E4cfu9dq1SOdNaJE2oqYd+APXsY8A2zkH+ANWUZkJ04PSnlaziJphyspGQrPcdhEz+9MOuPVQHKmVoNY9NmExsuKxW83QW1oV53FBN/QGv6d89t2cKlP9KowGbRrkCXt84XnH9PxOaJ8cbiSTazGlM/t0+QoH5t4tHPNSAkonEJ/eRQCi15vWn0+QsQMNXjPcTCkj1Lq5RJWdnwRGfrj39z3Qlm21u4gvGLvpCgZVGG3NdqVRqnv+f9fPtv9POoeJb28+9Jhq/uedb1q7nCMof28rdu/GS6/m2L+cLaW5xCOVPh8BB2zdeEd3L+Xy+3IIJteQEyr+ADvN5kEYgEo5lg+mLUOfmsPiydui9GzcN//zGl9NOnE/7nUCVLVD+WEg7OJdzjcsQCZ52K+4M6p1lnCEVkmt7eCzkbTMsyXNWPDF93nIK37BygQJARMh6KQBV7gv1FzHST54GyPWtrgc1KUedbIuEetcfaoEcmffR8U1yKdvMeXx58vbjf5UD5TIDBj86ihEjcVmg46trF6sSMAN1pfhCWYcgiEAcpamhyzZQoZdfyZQPsUxk8qCBj3SUAPVDl4Lyx22kCuW/imo8F2KhlimhwArSv59ioLZsoEL5r8ngdj7EUOUWaKH86Y5jKLOCmicE17jvnEmBTMxJ8ltxCivdd0VeYpRasIXKOy8NNwgqx5wjT7kq3bekn9OpXmbtAK+R33YMdT8UspEqlwvliYruj/Ut6e+sUPHYVp6+RSwUuHOn1WonbwuFz7NlhXrXU1mgx4FAjyjoAIk9lwbl2Orb/aDQmSxixV8oyoerS0T2GAT4pqqXl1cfsi+snQvjBCN7IedVAd+D/al8Vl/F/90Zx5teAKco2v4XfL8lsmxXOHWoUMhZ/p7n9fF2TERhiN+OGwFYjJ9vCZ/Hlm1uT79zh/nb7g+VWyBnVfqfcdv4h6wIcb+9P1E4m38v9eFM/vJ0/Ux/tof6zJQpJoXGRRzVz/GQGRQTs87EHthDPWBH0lTmRcYdQN3k+0GFmEvFX9hDvWBWpBjVURnZc2aql32hyGYYx44d0w4zzL/QVyhHRf2+JX2UqVipdm2dfrs7SCgLlBNTPQ/1h2KlSn9WbKBYn2+xC6kZgysVAUXnj5Eqbut0xueMUATU4E5hO/8FKFaqf21MtUP7nO3wrNdw4HQSis5fboGWysZUt7SjFr4olAOn3/8iFFOr7MonbSmmRlFQg9dk6+SzyR+9e4i9GGgpxuVk9sD0G+T08dCXoXx5KjVpxlQ79GLE7kSpiwyq6TvUeLZhXB60JlNVyqZHyFEXGTT9bvIDoOgEMsufQlrKJnk01MDptz0Qyhci08MUhQfEn9ldDJO9r4aybfRIqaj83f5L/Dlvd1sU1KCa8NIBVI4ooWkqf0SDF/9S02lADaoJVEWwb9QJs8cXqCoVG8BECzV4SXYE5QstW9TYvbUy7ViEsjO5HVRuABQtrT2UL2SZgmT7YikINlt1u+wNhFJyeSpsz+vL5f3pmBakqT7vxoxgqya6IfoS+UHb5Jf36bhnG/fv//3ACGtR+Gx+/He/Q+lw/kDhR/yIH+Ft/A8tRnCpvV4wIgAAAABJRU5ErkJggg==";
+
+            avatar.style.display="block";
+        });
+        const p=document.querySelector("#bmi");
+        const height=document.getElementById("htcm");
+        const weight=document.getElementById("weigh");
+        // btn.addEventListener("click",()=>{
+        //     const ht=height.value;
+        //     const wt=weight.value;
+        //     console.log(ht);
+        //     console.log(wt);
+        // });
+        btn.addEventListener("click",()=>{
+            const ht=parseInt(height.value);
+            const wt=parseInt(weight.value);
+            console.log(ht);
+            console.log(wt);
+            let val=(wt / (ht * ht)) * 10000;
+            val=Math.round(val);
+            p.textContent=`Your Bmi is ${val}`;
+        });
+    </script>
+</body>
+</html>

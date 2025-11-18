@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .parent{
+            padding: 20px;
+        }
+        button{
+            height: 50px;
+            width: 200px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <button id="red" style="background-color: red;">Red</button>
+        <button id="green" style="background-color: green;">Green</button>
+        <button id="blue" style="background-color: Blue;">Blue</button>
+        <button id="orange" style="background-color: orange;">Orange</button>
+        <button id="yellow" style="background-color: yellow;">yellow</button>
+    </div>
+    <script>
+        const parent=document.getElementById("parent");
+        parent.addEventListener("click",(e)=>{
+            const child=e.target;
+            document.body.style.backgroundColor=child.id;
+        });
+    </script>
+</body>
+</html>
