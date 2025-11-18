@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        body{
+            height: 100vh;
+            background-color: black;
+            justify-content: center;
+            color: white;
+            margin: auto;
+            margin-left: 400px;
+            margin-top: 100px;
+            padding: 20px;
+        }
+        p{
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple To Do List</h1>
+    <!--Input And To dos To addd new To dos-->
+    <p>Welcome to this todo list double click to edit todo</p>
+    <input type="text" id="todo-input" placeholder="enter a todo and press Add or Enter">
+    <button id="add-btn">Add</button>
+    <ul id="todo-list"></ul>
+    <script>
+        //select dom elements
+        const input=document.getElementById("todo-input");
+        const addBtn=document.getElementById("add-btn");
+        const list=document.getElementById("todo-list");
+
+        //try to load saved todos to local storage(if any)
+        const saved=localStorage.getItem('todos');
+        const todos=saved? JSON.parse(saved):[];
+        function saveTodos(){
+            //save current todos array to local storage
+            localStorage.setItem('todos',JSON.stringify(todos));
+
+        }
+        //create a dom node for a todo object and append it to the list
+        function createTodoNode(todo,index){
+            const li=document.createElement('li');
+            //checkbox to toggle completion
+            const checkbox=document.createElement('input');
+            checkbox.type='checkbox';
+            checkbox.checked=!!todo.completed;
+            checkbox.addEventListener("change",()=>{
+                todo.completed=checkbox.checked;
+
+                //visual feedback:strike through when completed
+                textSpan.style.textDecoration=todo.completed? 'line-through':"";
+                saveTodos();
+            });
+
+            const textSpan=document.createElement("span");
+            textSpan.textContent=todo.text;
+            textSpan.style.margin='0 8px';
+            if (todo.completed){
+                textSpan.style.textDecoration='line-through';
+
+            }
+            //add double click event listener to edit todo
+            textSpan.addEventListener("dblclick",()=>{
+                const newText=prompt("edit todo",todo.text);
+                textSpan.textContent=todo.text;
+                saveTodos();
+            });
+            
+
+            //delete todo btn
+            const delBtn=document.createElement('button');
+            delBtn.textContent="Delete";
+            delBtn.addEventListener('click',()=>{
+                todos.splice(index,1);
+                render();
+                saveTodos();
+            });
+
+            li.appendChild(checkbox);
+            li.appendChild(textSpan);
+            li.appendChild(delBtn);
+            return li;
+        }
+
+        //render the whole todo list from todo list
+        function render(){
+            list.innerHTML="";
+            //recreate each item
+            todos.forEach((todo,index)=>{
+                const node=createTodoNode(todo,index); 
+                list.appendChild(node);
+            });
+        }
+
+        function addTodo(){
+            const text=input.value.trim();
+            if (!text){
+                return;
+            }
+
+            //push a new todo object
+            todos.push({text,completed:false});
+            input.value='';
+            render();
+            saveTodos();
+        }
+
+        addBtn.addEventListener("click",addTodo);
+        render();
+    </script>
+</body>
+</html>
